@@ -22,7 +22,7 @@
 					<li
 						v-for="searchResult in mapboxSearchResults"
 						:key="searchResult.id"
-						class="py-2 cursor-pointer"
+						class="py-2 cursor-pointer hover:bg-weather-primary"
 					>
 						{{ searchResult.place_name }}
 					</li>
