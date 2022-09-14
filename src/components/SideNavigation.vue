@@ -11,13 +11,14 @@
 			</RouterLink>
 
 			<div class="flex gap-3 flex-1 justify-end">
-				<i 
-                    @click="toggleActive"
+				<i
+					@click="toggleActive"
 					class="fa-solid fa-circle-info text-xl hover:text-weather-secondary duration-150 cursor-pointer"
 				></i>
 				<i
 					class="fa-solid fa-plus text-xl hover:text-weather-secondary duration-150 cursor-pointer"
 					@click="addCity"
+					v-if="route.query.preview"
 				></i>
 			</div>
 
@@ -25,8 +26,8 @@
 				<div class="text-black">
 					<h1 class="text-2xl mb-1">About:</h1>
 					<p class="mb-4">
-						The J-Weather allows you to track the current and
-						future weather of cities of your choosing.
+						The J-Weather allows you to track the current and future
+						weather of cities of your choosing.
 					</p>
 					<h2 class="text-2xl">How it works:</h2>
 					<ol class="list-decimal list-inside mb-4">
@@ -59,21 +60,41 @@
 
 <script setup>
 import { ref } from "vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRoute, useRouter } from "vue-router";
+import { uid } from "uid";
 import BaseModal from "./BaseModal.vue";
 
-const savedCities = ref([])
+const savedCities = ref([]);
+const route = useRoute();
+const router = useRouter();
 const addCity = () => {
-	savedCities.value = localStorage.getItem("savedCities") != null ? JSON.parse(localStorage.getItem("savedCities")) : []
+	if(localStorage.getItem("savedCities")){
+		savedCities.value = JSON.parse(localStorage.getItem("savedCities"))
+	}
+
 
 	const locationObj = {
-		// id: 
-	}
-}
+		id: uid(),
+		state: route.params.state,
+		city: route.params.city,
+		coords: {
+			lat: route.query.lat,
+			lng: route.query.lng,
+		},
+	};
 
-const modalActive = ref(null)
+	savedCities.value.push(locationObj);
+
+	localStorage.setItem('savedCities', JSON.stringify(savedCities.value))
+
+	let query = Object.assign({}, route.query)
+	delete query.preview;
+	router.replace({query})
+};
+
+const modalActive = ref(null);
 
 const toggleActive = () => {
-    modalActive.value = !modalActive.value
-}
+	modalActive.value = !modalActive.value;
+};
 </script>
