@@ -13,11 +13,13 @@
 			<div class="flex gap-3 flex-1 justify-end">
 				<i
 					@click="toggleActive"
+					title="Help"
 					class="fa-solid fa-circle-info text-xl hover:text-weather-secondary duration-150 cursor-pointer"
 				></i>
 				<i
 					class="fa-solid fa-plus text-xl hover:text-weather-secondary duration-150 cursor-pointer"
 					@click="addCity"
+					title="Add City to Homepage"
 					v-if="route.query.preview"
 				></i>
 			</div>
@@ -68,10 +70,9 @@ const savedCities = ref([]);
 const route = useRoute();
 const router = useRouter();
 const addCity = () => {
-	if(localStorage.getItem("savedCities")){
-		savedCities.value = JSON.parse(localStorage.getItem("savedCities"))
+	if (localStorage.getItem("savedCities")) {
+		savedCities.value = JSON.parse(localStorage.getItem("savedCities"));
 	}
-
 
 	const locationObj = {
 		id: uid(),
@@ -85,12 +86,12 @@ const addCity = () => {
 
 	savedCities.value.push(locationObj);
 
-	localStorage.setItem('savedCities', JSON.stringify(savedCities.value))
+	localStorage.setItem("savedCities", JSON.stringify(savedCities.value));
 
-	let query = Object.assign({}, route.query)
+	let query = Object.assign({}, route.query);
 	delete query.preview;
-	query.id = locationObj.id
-	router.replace({query})
+	query.id = locationObj.id;
+	router.replace({ query });
 };
 
 const modalActive = ref(null);
