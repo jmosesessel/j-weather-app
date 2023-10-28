@@ -43,7 +43,7 @@ const getCities = async () => {
 
 await getCities();
 
-const router = useRouter
+const router = useRouter()
 const goToCityView = (city) => {
     router.push({
         name: 'cityView',
