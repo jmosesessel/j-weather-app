@@ -1,6 +1,11 @@
 # j-weather-app
 
+This is a simple weather webapp developed with Vue3, Vite and TailwindCSS
+
 This template should help get you started developing with Vue 3 in Vite.
+
+## Demo
+https://jmosesessel.github.io/j-weather-app/
 
 ## Recommended IDE Setup
 
