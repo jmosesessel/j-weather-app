@@ -23,30 +23,33 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4  # Updated to v4
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4  # Updated to v4
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
       - name: Install dependencies
-        run: npm ci  # Clean install (faster & more reliable)
+        run: npm ci
 
       - name: Build
         run: npm run build
 
       - name: Verify build output
-        run: ls -R dist  # Ensure 'dist' exists
+        run: ls -R dist
+
+      - name: Pre-install upload-artifact@v3
+        uses: actions/upload-artifact@v3  # <-- workaround
 
       - name: Configure Pages
-        uses: actions/configure-pages@v4  # Updated to v4
+        uses: actions/configure-pages@v4
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2  # Correct for Pages
+        uses: actions/upload-pages-artifact@v2
         with:
-          path: dist  # Vite's default output
+          path: dist
 
       - name: Deploy
-        uses: actions/deploy-pages@v2  # Updated to v2
+        uses: actions/deploy-pages@v2
