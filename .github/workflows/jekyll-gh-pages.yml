@@ -40,9 +40,6 @@ jobs:
       - name: Verify build output
         run: ls -R build
 
-      - name: Pre-install upload-artifact@v3
-        uses: actions/upload-artifact@v3  # <-- workaround
-
       - name: Configure Pages
         uses: actions/configure-pages@v4
 
